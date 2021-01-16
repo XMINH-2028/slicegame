@@ -1,0 +1,153 @@
+
+@keyframes example {
+    0%   {opacity: 0;}
+    50%  {opacity: 0.5;}
+    100% {opacity: 0;}
+  }
+
+table {
+    position: relative;
+    overflow: hidden;
+}
+td {
+    padding: 0px;
+    overflow: hidden;
+}
+body {
+
+}
+#main {
+    padding: 0 5px !important;
+    height: 100vh;
+    min-width: 280px;
+}
+
+#nexttop,#tablewrap {
+    display: none;
+}
+#nexttop .btn-lg {
+    padding: 5px 15px;
+}
+#nexttop .btn-danger {
+    padding: 0 !important;
+}
+#nexttop .btn-danger a {
+    display: block;
+    padding: 5px 15px;
+    text-decoration: none;
+}
+#cover {
+    position: absolute;
+    width: 100%;
+    height:100%;
+    top: 0;
+    left:0;
+    background-color: transparent;
+}
+#xchoice {
+    flex-grow: 1;
+}
+#main>div {
+    flex-grow: 50;
+}
+#top {
+    flex-grow: 1;
+}
+#picture {
+    display: flex;
+    flex-grow: 50;
+}
+#picture>div>div {
+    top:0;
+    left:0;
+    display: none;
+}
+#img1 {
+    width: 0px;
+}
+#picture>div>div button {
+    background-color: rgba(255,255,255,0.5);
+    color: black;
+}
+#picture>div>div button:hover {
+    background-color: rgba(255,255,255,1);
+}
+#picture>div>div label {
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+}
+#picture>div>div label:hover {
+    background-color: rgba(0,0,0,1);
+}
+
+#selectimage,#selectsize,#nexttop {
+        margin-top: 0.25rem !important;
+}
+
+@media screen and (min-width: 480px) and (min-height: 480px) {
+    #selectimage,#selectsize,#nexttop {
+        margin-top: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+}
+@media screen and (min-height: 568px) {
+    #selectimage,#selectsize,#nexttop {
+        margin-top: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+}
+
+@media screen and (max-height: 480px) {
+    #selectimage,#selectsize {
+        font-size: 1.2rem !important;
+    }
+    #xchoice {
+        font-size: 1.8rem !important;
+    }
+    #nexttop .btn-lg {
+    padding: 3px 10px;
+    }
+
+    #nexttop .btn-lg a {
+        display: block;
+        padding: 3px 10px;
+    }
+}
+@media screen and (max-width: 576px) {
+    #nexttop {
+        flex-wrap: wrap;
+    }
+    .time {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 480px) {
+    #selectimage,#selectsize {
+        font-size: 1.2rem !important;
+    }
+}
+@media screen and (max-width: 320px) {
+    #top .btn {
+        padding: 5px !important;
+    }
+     #nexttop .btn-lg {
+    padding: 3px 10px;
+    }
+
+    #nexttop .btn-lg a {
+        display: block;
+        padding: 3px 10px;
+    }
+    #xchoice {
+        font-size: 2rem !important;
+    }
+    #selectimage,#selectsize {
+        font-size: 1.2rem !important;
+    }
+}
+@media screen and (max-width: 280px) {
+    #top .btn {
+        padding: 2px !important;
+    }
+}
+

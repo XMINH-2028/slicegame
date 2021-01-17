@@ -5,7 +5,7 @@
     100% {opacity: 0;}
   }
 
-table {
+table { 
     position: relative;
     overflow: hidden;
 }
@@ -13,13 +13,12 @@ td {
     padding: 0px;
     overflow: hidden;
 }
-body {
 
-}
 #main {
-    padding: 0 5px !important;
+    padding: 0 10px !important;
     height: 100vh;
     min-width: 280px;
+    min-height: 280px;
 }
 
 #nexttop,#tablewrap {
@@ -45,25 +44,38 @@ body {
     background-color: transparent;
 }
 #xchoice {
-    flex-grow: 1;
+    height: 10%;
 }
-#main>div {
-    flex-grow: 50;
+#content {
+    height: 90%;
 }
 #top {
-    flex-grow: 1;
+    height: 100%;
+}
+#top>h3 {
+    height:12%;
+}
+
+#top button {
+    min-width: 100px;
 }
 #picture {
     display: flex;
-    flex-grow: 50;
+    height: 100%;
+}
+#picture>h3 {
+    height:12%;
+}
+#picture>div {
+   height: 88%;
 }
 #picture>div>div {
-    top:0;
     left:0;
     display: none;
 }
 #img1 {
     width: 0px;
+    height:0px;
 }
 #picture>div>div button {
     background-color: rgba(255,255,255,0.5);
@@ -81,19 +93,19 @@ body {
 }
 
 #selectimage,#selectsize,#nexttop {
-        margin-top: 0.25rem !important;
+        padding-top: 0.25rem !important;
 }
 
 @media screen and (min-width: 480px) and (min-height: 480px) {
     #selectimage,#selectsize,#nexttop {
-        margin-top: 0.5rem !important;
-        margin-bottom: 0.5rem !important;
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
     }
 }
 @media screen and (min-height: 568px) {
     #selectimage,#selectsize,#nexttop {
-        margin-top: 1rem !important;
-        margin-bottom: 1rem !important;
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
     }
 }
 
@@ -112,6 +124,15 @@ body {
         display: block;
         padding: 3px 10px;
     }
+}
+@media screen and (max-height: 360px) {
+    #selectimage,#selectsize {
+        font-size: 1rem !important;
+    }
+    #xchoice {
+        font-size: 1.2rem !important;
+    }
+    
 }
 @media screen and (max-width: 576px) {
     #nexttop {

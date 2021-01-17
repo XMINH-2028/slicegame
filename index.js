@@ -21,12 +21,13 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
         var adds="";
         var layout = 0;
         var idtable = document.getElementById('table');
-        var idpic=document.getElementById('picture');
+        var idpic=document.getElementById('imgrd');
         var addpic = document.getElementById('img1');
         var srcpic=['images/butterfly.jpg','images/cat.jpg','images/dolphin.jpg','images/dragonfly.jpg','images/elephant.jpg',
         'images/koala.jpg','images/Lighthouse.jpg','images/lotus.jpg','images/monkey.jpg','images/rose.jpg','images/sunflower.jpg','images/winter.jpg'];    
         var btn=['rgba(0,123,255,0.5)','rgba(40,167,69,0.5)','rgba(255,193,7,0.5)','rgba(220,53,69,0.5)'];
         var srcrandom="";
+        var saveh,savew,idpich,idpicw;
         function creatNext(){
             var node = document.createElement("button");
             node.innerHTML="NEXT";
@@ -35,29 +36,74 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             node.setAttribute('id','next');
             document.getElementById('topleft').appendChild(node);
         }
+        function getSize(x,y) {
+            idpich=idpic.offsetHeight;
+            idpicw= idpic.offsetWidth;
+            if(y>x) {
+                if (idpicw/(y/x)<=idpich) {
+                    addpic.style.height = idpicw/(y/x)+'px';
+                    addpic.style.width = idpicw+'px';
+                    document.querySelector("#picture>div>div").style.bottom = idpich-idpicw/(y/x)+'px';
+                    document.querySelector("#imgrd button").style.width = idpicw+'px';
+                    document.querySelector("#imgrd label").style.width = idpicw+'px';
+                } else {
+                    addpic.style.height = idpich+'px';
+                    addpic.style.width = (y/x)*idpich+'px';
+                    document.querySelector("#picture>div>div").style.bottom ='0px';
+                    document.querySelector("#imgrd button").style.width = (y/x)*idpich+'px';
+                    document.querySelector("#imgrd label").style.width = (y/x)*idpich+'px';
+                }       
+            } else {
+                if (idpich/(x/y)<=idpicw) {
+                    addpic.style.height = idpich+'px';
+                    addpic.style.width = idpich/(x/y)+'px';
+                    document.querySelector("#picture>div>div").style.bottom = '0px';
+                    document.querySelector("#imgrd button").style.width = idpich/(x/y)+'px';
+                    document.querySelector("#imgrd label").style.width = idpich/(x/y)+'px';
+                    setFont(document.querySelector("#imgrd button"));
+                } else {
+                    addpic.style.height = (x/y)*idpicw+'px';
+                    addpic.style.width = idpicw+'px';
+                    document.querySelector("#picture>div>div").style.bottom = idpich-(x/y)*idpicw+'px';
+                    document.querySelector("#imgrd button").style.width = idpicw+'px';
+                    document.querySelector("#imgrd label").style.width = idpicw+'px';
+                }   
+            }
+            setFont(document.querySelector("#imgrd button"));
+        }
+        function setFont(x) {
+            var str = x.innerHTML;
+            var h = x.offsetHeight;
+            var w = x.offsetWidth;
+            document.querySelector("#imgrd button").style.fontSize = w/str.length*1.8+'px';
+            document.querySelector("#imgrd label").style.fontSize = w/str.length*1.8+'px';
+           
+        }
+        
         function setPic() {
                 
                     if (window.innerHeight<window.innerWidth/1.5) {
-                        document.querySelector('#main>div').style.flexDirection = 'row';
-                        document.querySelector("#picture>div").style.height = '100%';
-                        document.querySelector("#picture>div").style.width = idpic.offsetWidth+'px';
+                        document.getElementById('content').style.flexDirection = 'row';
+                        document.getElementById('top').style.width = '50%';
+                        document.getElementById('picture').style.width = '50%';
+                        document.querySelector("#top>div").style.flexDirection = 'column';
                         if (srcrandom==="") {
                             srcrandom=Math.floor(Math.random()*12);
                             addpic.setAttribute('src',srcpic[srcrandom]);
                             addpic.addEventListener("load", function(){
-                                if(this.naturalWidth>this.naturalHeight) {
-                                    addpic.style.height = idpic.offsetWidth/(this.naturalWidth/this.naturalHeight)+'px';
-                                    addpic.style.width = '100%';
-                                } else {
-                                    addpic.style.height = '100%';
-                                    addpic.style.width = 'auto';
-                                }
+                                saveh=this.naturalHeight;
+                                savew=this.naturalWidth;
+                                getSize(saveh,savew);   
                             });
                         }
+
                     } else {
                         
-                    }
-               
+                    } 
+                    setTimeout(()=>{
+                            document.querySelector("#picture>div>div").style.display="flex";
+                            setFont(document.querySelector("#imgrd button"))
+                        },30)
                 
             
             
@@ -75,6 +121,11 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             }*/
         }
        setPic();
+       window.onresize=function(){
+            
+                getSize(saveh,savew); 
+            
+        }
         //Upload image
         function Selectimg(event) {
             addpic.style.backgroundImage=`url('${URL.createObjectURL(event.target.files[0])}')`;
@@ -113,14 +164,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             }
             return { top: _y, left: _x };
         }
-       /* window.onresize=function(){
-            if (layout===1) {
-                setSize();
-                cutResize();
-            } else {
-                setPic();
-            }
-        }*/
+       
         function setLayout(){
             layout=1;
             clearInterval(visible);

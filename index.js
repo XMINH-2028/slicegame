@@ -89,8 +89,13 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                     if (window.innerHeight<window.innerWidth/1.5) {
                         document.getElementById('content').style.flexDirection = 'row';
                         document.getElementById('top').style.width = '50%';
+                        document.getElementById('top').style.height = '100%';
                         document.getElementById('picture').style.width = '50%';
+                        document.getElementById('picture').style.height = '100%';
                         document.querySelector("#top>div").style.flexDirection = 'column';
+                        for (let i=0;i<document.querySelectorAll("#top button").length;i++){
+                            document.querySelectorAll("#top button")[i].style.minWidth = '100px';
+                        }
                         if (srcrandom==="") {
                             srcrandom=Math.floor(Math.random()*12);
                             addpic.setAttribute('src',srcpic[srcrandom]);
@@ -99,15 +104,35 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                                 savew=this.naturalWidth;
                                 getSize(saveh,savew);   
                             });
+                        } else {
+                            getSize(saveh,savew);
                         }
-
                     } else {
-                        
+                        document.getElementById('content').style.flexDirection = 'column';
+                        document.getElementById('top').style.width = '100%';
+                        document.getElementById('top').style.height = '20%';
+                        document.getElementById('picture').style.width = '100%';
+                        document.getElementById('picture').style.height = '80%';
+                        document.querySelector("#top>div").style.flexDirection = 'row';
+                        for (let i=0;i<document.querySelectorAll("#top button").length;i++){
+                            document.querySelectorAll("#top button")[i].style.minWidth = 'auto';
+                        }
+                        if (srcrandom==="") {
+                            srcrandom=Math.floor(Math.random()*12);
+                            addpic.setAttribute('src',srcpic[srcrandom]);
+                            addpic.addEventListener("load", function(){
+                                saveh=this.naturalHeight;
+                                savew=this.naturalWidth;
+                                getSize(saveh,savew);   
+                            });
+                        } else {
+                            getSize(saveh,savew);
+                        }
                     } 
                     setTimeout(()=>{
                             document.querySelector("#picture>div>div").style.display="flex";
                             setFont(document.querySelector("#imgrd button"))
-                        },30)
+                        },50)
                 
             
             
@@ -127,7 +152,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
        setPic();
        window.onresize=function(){
             
-                getSize(saveh,savew); 
+                setPic(); 
             
         }
         //Upload image

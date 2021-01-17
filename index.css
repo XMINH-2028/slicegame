@@ -50,22 +50,9 @@ td {
 #content {
     height: 90%;
 }
-#top {
-    height: 100%;
-}
-#top>h3 {
-    height:12%;
-}
 
-#top button {
-    min-width: 100px;
-}
 #picture {
     display: flex;
-    height: 100%;
-}
-#picture>h3 {
-    height:12%;
 }
 #picture>div {
    height: 88%;
@@ -95,6 +82,7 @@ td {
 
 #selectimage,#selectsize,#nexttop {
         padding-top: 0.25rem !important;
+        padding-bottom: 0.25rem !important;
 }
 
 @media screen and (min-width: 480px) and (min-height: 480px) {

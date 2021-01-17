@@ -37,6 +37,11 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             document.getElementById('topleft').appendChild(node);
         }
         function getSize(x,y) {
+            if(screen.width<1360) {
+                document.getElementById('main').style.height = window.innerHeight +'px';
+            } else {
+                document.getElementById('main').style.height = '100vh';
+            }
             idpich=idpic.offsetHeight;
             idpicw= idpic.offsetWidth;
             if(y>x) {
@@ -81,7 +86,6 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
         }
         
         function setPic() {
-                
                     if (window.innerHeight<window.innerWidth/1.5) {
                         document.getElementById('content').style.flexDirection = 'row';
                         document.getElementById('top').style.width = '50%';

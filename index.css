@@ -16,9 +16,10 @@ td {
 
 #main {
     padding: 0 10px !important;
-    height: 100vh;
     min-width: 280px;
     min-height: 280px;
+    max-width: 1920px;
+    max-height: 1920px;
 }
 
 #nexttop,#tablewrap {

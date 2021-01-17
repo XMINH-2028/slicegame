@@ -65,6 +65,9 @@ td {
 #picture,#tablewrap {
     display: flex;
 }
+#tablewrap {
+    padding: 15px 0;
+}
 #picture>div {
    height: 88%;
 }

@@ -297,8 +297,8 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             }
             document.getElementById("table").innerHTML=text;
             /*Thiết lập đơn vị theo kích thước màn hình*/
-            if (addtb.offsetHeight<addtb.offsetWidth) {
-                setsize = Math.floor(addtb.offsetHeight);
+            if (addtb.offsetHeight-30<addtb.offsetWidth) {
+                setsize = Math.floor(addtb.offsetHeight-30);
             } else {
                 setsize = Math.floor(addtb.offsetWidth); 
             }

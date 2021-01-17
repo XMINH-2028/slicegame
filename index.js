@@ -228,11 +228,6 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             return { top: _y, left: _x };
         }
         function setDisplay() {
-            if(screen.width<1360) {
-                document.getElementById('main').style.height = window.innerHeight +'px';
-            } else {
-                document.getElementById('main').style.height = '100vh';
-            }
             if (window.innerHeight<window.innerWidth/1.5) {
                 document.getElementById('layout').style.flexDirection = 'row';
                 document.getElementById('nexttop').style.width = '45%';
@@ -247,6 +242,11 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                 document.getElementById('nexttop').style.height = '30%';
                 document.getElementById('tablewrap').style.width = '100%';
                 document.getElementById('tablewrap').style.height = '70%';
+            }
+            if(screen.width<1360) {
+                document.getElementById('main').style.height = window.innerHeight +'px';
+            } else {
+                document.getElementById('main').style.height = '100vh';
             }
         }
         function setLayout(){

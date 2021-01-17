@@ -23,8 +23,9 @@ td {
 }
 
 #nexttop,#tablewrap {
-    display: none;
+    display: flex;
 }
+
 #nexttop .btn-lg {
     padding: 5px 15px;
 }
@@ -49,9 +50,19 @@ td {
 }
 #content {
     height: 90%;
+    display: flex;
 }
-
-#picture {
+#layout {
+    height: 100%;
+    display: none;
+}
+#top{
+    min-height: 60px;
+}
+#nexttop {
+    min-height: 180px;
+}
+#picture,#tablewrap {
     display: flex;
 }
 #picture>div {
@@ -123,14 +134,7 @@ td {
     }
     
 }
-@media screen and (max-width: 576px) {
-    #nexttop {
-        flex-wrap: wrap;
-    }
-    .time {
-        width: 100%;
-    }
-}
+
 @media screen and (max-width: 480px) {
     #selectimage,#selectsize {
         font-size: 1.2rem !important;

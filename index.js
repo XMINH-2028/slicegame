@@ -28,15 +28,9 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
         var btn=['rgba(0,123,255,0.5)','rgba(40,167,69,0.5)','rgba(255,193,7,0.5)','rgba(220,53,69,0.5)'];
         var srcrandom="";
         var saveh,savew,idpich,idpicw;
-        function creatNext(){
-            var node = document.createElement("button");
-            node.innerHTML="NEXT";
-            node.setAttribute('class','btn-lg btn-success text-light');
-            node.setAttribute('onclick','Next()');
-            node.setAttribute('id','next');
-            document.getElementById('topleft').appendChild(node);
-        }
-        function getSize(x,y) {
+
+
+        function getSize(a,b) {
             if(screen.width<1360) {
                 document.getElementById('main').style.height = window.innerHeight +'px';
             } else {
@@ -44,42 +38,47 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             }
             idpich=idpic.offsetHeight;
             idpicw= idpic.offsetWidth;
-            if(y>x) {
-                if (idpicw/(y/x)<=idpich) {
-                    addpic.style.height = idpicw/(y/x)+'px';
+            if(b>a) {
+                if (idpicw/(b/a)<=idpich) {
+                    addpic.style.height = idpicw/(b/a)+'px';
                     addpic.style.width = idpicw+'px';
-                    document.querySelector("#picture>div>div").style.bottom = idpich-idpicw/(y/x)+'px';
+                    document.querySelector("#picture>div>div").style.bottom = idpich-idpicw/(b/a)+'px';
                     document.querySelector("#imgrd button").style.width = idpicw+'px';
                     document.querySelector("#imgrd label").style.width = idpicw+'px';
                 } else {
                     addpic.style.height = idpich+'px';
-                    addpic.style.width = (y/x)*idpich+'px';
+                    addpic.style.width = (b/a)*idpich+'px';
                     document.querySelector("#picture>div>div").style.bottom ='0px';
-                    document.querySelector("#imgrd button").style.width = (y/x)*idpich+'px';
-                    document.querySelector("#imgrd label").style.width = (y/x)*idpich+'px';
+                    document.querySelector("#imgrd button").style.width = (b/a)*idpich+'px';
+                    document.querySelector("#imgrd label").style.width = (b/a)*idpich+'px';
                 }       
             } else {
-                if (idpich/(x/y)<=idpicw) {
+                if (idpich/(a/b)<=idpicw) {
                     addpic.style.height = idpich+'px';
-                    addpic.style.width = idpich/(x/y)+'px';
+                    addpic.style.width = idpich/(a/b)+'px';
                     document.querySelector("#picture>div>div").style.bottom = '0px';
-                    document.querySelector("#imgrd button").style.width = idpich/(x/y)+'px';
-                    document.querySelector("#imgrd label").style.width = idpich/(x/y)+'px';
-                    setFont(document.querySelector("#imgrd button"));
+                    document.querySelector("#imgrd button").style.width = idpich/(a/b)+'px';
+                    document.querySelector("#imgrd label").style.width = idpich/(a/b)+'px';
                 } else {
-                    addpic.style.height = (x/y)*idpicw+'px';
+                    addpic.style.height = (a/b)*idpicw+'px';
                     addpic.style.width = idpicw+'px';
-                    document.querySelector("#picture>div>div").style.bottom = idpich-(x/y)*idpicw+'px';
+                    document.querySelector("#picture>div>div").style.bottom = idpich-(a/b)*idpicw+'px';
                     document.querySelector("#imgrd button").style.width = idpicw+'px';
                     document.querySelector("#imgrd label").style.width = idpicw+'px';
                 }   
             }
-            setFont(document.querySelector("#imgrd button"));
+            setFont(document.querySelector("#imgrd button"),document.querySelector("#imgrd label"));
         }
-        function setFont(x) {
-            var str = x.innerHTML;
-            var h = x.offsetHeight;
-            var w = x.offsetWidth;
+        function setFont(a,b) {
+            var str1 = a.innerHTML;
+            var str2= b.innerHTML;
+            var w = a.offsetWidth;
+            var str;
+            if (str1.length<str2.length) {
+                str=str2;
+            } else {
+                str=str1;
+            }
             document.querySelector("#imgrd button").style.fontSize = w/str.length*1.8+'px';
             document.querySelector("#imgrd label").style.fontSize = w/str.length*1.8+'px';
            
@@ -131,37 +130,64 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                     } 
                     setTimeout(()=>{
                             document.querySelector("#picture>div>div").style.display="flex";
-                            setFont(document.querySelector("#imgrd button"))
+                            setFont(document.querySelector("#imgrd button"),document.querySelector("#imgrd label"))
                         },50)
-                
-            
-            
-            /*if (window.innerHeight<window.innerWidth) {
-                addpic.style.width = Math.floor(window.innerHeight - getOffset(idpic).top-20)+'px';
-                addpic.style.height = Math.floor(window.innerHeight - getOffset(idpic).top-20)+'px';
+        }
+
+
+        setPic();
+
+
+        window.onresize=function(){
+            if (layout===1) {
+                setDisplay();
+                setSize();
+                cutResize();
             } else {
-                if (Math.floor(window.innerHeight - getOffset(idpic).top-20)<Math.floor(window.innerWidth-30)){
-                    addpic.style.width = Math.floor(window.innerHeight - getOffset(idpic).top-20)+'px';
-                    addpic.style.height = Math.floor(window.innerHeight - getOffset(idpic).top-20)+'px';
-                } else {
-                    addpic.style.width = Math.floor(window.innerWidth-30)+'px';
-                    addpic.style.height = Math.floor(window.innerWidth-30)+'px';
-                }   
-            }*/
+                setPic();
+            } 
         }
-       setPic();
-       window.onresize=function(){
-            
-                setPic(); 
-            
+
+
+         //Hàm chọn kích thước
+        function choosesize(elmn,clr0,clr1){
+            sizemain=clr0;
+            for (let i=0;i<document.querySelectorAll('.size').length;i++) {
+                document.querySelectorAll('.size')[i].style.outline = 'none';
+            }
+            elmn.style.outline = `5px solid ${btn[clr1]}`;
+            if (choicesize == 0) {
+            choicesize += 1;
+            }
+            if ((choiceimage+choicesize) == 2) {
+                Cut();
+            }
         }
+
         //Upload image
         function Selectimg(event) {
-            addpic.style.backgroundImage=`url('${URL.createObjectURL(event.target.files[0])}')`;
+            addpic.setAttribute('src',URL.createObjectURL(event.target.files[0]));
             adds=URL.createObjectURL(event.target.files[0]);
-            addpic.style.borderRadius="50px";
-            document.querySelector("#img1 button").innerHTML= 'Click me to select default image!';
-            document.querySelector("#img1 label").innerHTML= 'Selected your image!';
+            addpic.style.borderRadius="30px";
+            document.querySelector("#imgrd>div label").style.borderRadius="0 0 30px 30px";
+            document.querySelector("#imgrd>div>button").innerHTML= 'Click me to select default image!';
+            document.querySelector("#imgrd>div label").innerHTML= 'Selected your image!';
+            if (choiceimage == 0) {
+                choiceimage += 1;
+            }
+            if ((choiceimage+choicesize) == 2) {
+                Cut();
+            }
+        }
+        //Hàm chọn ảnh
+        function picture() {
+            addpic.setAttribute('src',srcpic[srcrandom]);
+            addpic.style.borderRadius="30px";
+            document.querySelector("#imgrd>div label").style.borderRadius="0 0 30px 30px";
+            adds = srcpic[srcrandom];
+            document.querySelector("#imgrd>div>button").innerHTML= 'Selected default image!';
+            document.querySelector("#imgrd>div label").innerHTML= 'Click me to select your image!';
+            document.getElementById('sl_image').value = "";
             if (choiceimage == 0) {
                 choiceimage += 1;
             }
@@ -170,6 +196,14 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             }
         }
 
+        function creatNext(){
+            var node = document.createElement("button");
+            node.innerHTML="NEXT";
+            node.setAttribute('class','btn-lg btn-success text-light');
+            node.setAttribute('onclick','Next()');
+            node.setAttribute('id','next');
+            document.getElementById('topleft').appendChild(node);
+        }
 
         //Next
         function Next() {
@@ -193,7 +227,28 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             }
             return { top: _y, left: _x };
         }
-       
+        function setDisplay() {
+            if(screen.width<1360) {
+                document.getElementById('main').style.height = window.innerHeight +'px';
+            } else {
+                document.getElementById('main').style.height = '100vh';
+            }
+            if (window.innerHeight<window.innerWidth/1.5) {
+                document.getElementById('layout').style.flexDirection = 'row';
+                document.getElementById('nexttop').style.width = '45%';
+                document.getElementById('nexttop').style.minWidth = '260px';
+                document.getElementById('nexttop').style.height = '100%';
+                document.getElementById('tablewrap').style.width = '55%';
+                document.getElementById('tablewrap').style.height = '100%';
+            } else {
+                document.getElementById('layout').style.flexDirection = 'column';
+                document.getElementById('nexttop').style.width = '100%';
+                document.getElementById('nexttop').style.minWidth = 'auto';
+                document.getElementById('nexttop').style.height = '30%';
+                document.getElementById('tablewrap').style.width = '100%';
+                document.getElementById('tablewrap').style.height = '70%';
+            }
+        }
         function setLayout(){
             layout=1;
             clearInterval(visible);
@@ -202,32 +257,32 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             sd=0;
             me=0;
             hr=0; 
-            document.getElementById("nexttop").innerHTML=`<div class="d-flex justify-content-center align-items-center mb-1" id="topleft">
-                        <button class="btn-lg btn-danger"><a href="index.html" class="text-light">HOME</a></button>
-                        <button class="btn-lg btn-warning mx-2 text-light" onclick="Cut()">RESET</button>
-                    </div>
-                    <div class="time d-flex justify-content-center align-items-center mb-1 mx-2">
-                        <svg width="3em" height="3em" viewBox="0 0 16 16" class="bi bi-alarm text-primary" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M8 15A6 6 0 1 0 8 3a6 6 0 0 0 0 12zm0 1A7 7 0 1 0 8 2a7 7 0 0 0 0 14z"/>
-                            <path fill-rule="evenodd" d="M8 4.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.053.224l-1.5 3a.5.5 0 1 1-.894-.448L7.5 8.882V5a.5.5 0 0 1 .5-.5z"/>
-                            <path d="M.86 5.387A2.5 2.5 0 1 1 4.387 1.86 8.035 8.035 0 0 0 .86 5.387zM11.613 1.86a2.5 2.5 0 1 1 3.527 3.527 8.035 8.035 0 0 0-3.527-3.527z"/>
-                            <path fill-rule="evenodd" d="M11.646 14.146a.5.5 0 0 1 .708 0l1 1a.5.5 0 0 1-.708.708l-1-1a.5.5 0 0 1 0-.708zm-7.292 0a.5.5 0 0 0-.708 0l-1 1a.5.5 0 0 0 .708.708l1-1a.5.5 0 0 0 0-.708zM5.5.5A.5.5 0 0 1 6 0h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z"/>
-                            <path d="M7 1h2v2H7V1z"/>
-                          </svg>
-                        <span id="hour" class="text-danger">00</span>:<span id="minute" class="text-warning">00</span>:<span id="second" class="text-success">00</span>
-                    </div>`;
+            document.getElementById("nexttop").innerHTML=`<h1 class="h1 text-center text-primary pt-2 w-100 mb-3" id="xchoice1">X-SLIDE</h1>
+                        <div class="time d-flex justify-content-center align-items-center mb-2">
+                            <svg width="3em" height="3em" viewBox="0 0 16 16" class="bi bi-alarm text-primary" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M8 15A6 6 0 1 0 8 3a6 6 0 0 0 0 12zm0 1A7 7 0 1 0 8 2a7 7 0 0 0 0 14z"/>
+                                <path fill-rule="evenodd" d="M8 4.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.053.224l-1.5 3a.5.5 0 1 1-.894-.448L7.5 8.882V5a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M.86 5.387A2.5 2.5 0 1 1 4.387 1.86 8.035 8.035 0 0 0 .86 5.387zM11.613 1.86a2.5 2.5 0 1 1 3.527 3.527 8.035 8.035 0 0 0-3.527-3.527z"/>
+                                <path fill-rule="evenodd" d="M11.646 14.146a.5.5 0 0 1 .708 0l1 1a.5.5 0 0 1-.708.708l-1-1a.5.5 0 0 1 0-.708zm-7.292 0a.5.5 0 0 0-.708 0l-1 1a.5.5 0 0 0 .708.708l1-1a.5.5 0 0 0 0-.708zM5.5.5A.5.5 0 0 1 6 0h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z"/>
+                                <path d="M7 1h2v2H7V1z"/>
+                              </svg>
+                            <span id="hour" class="text-danger">00</span>:<span id="minute" class="text-warning">00</span>:<span id="second" class="text-success">00</span>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center mb-1" id="topleft">
+                            <button class="btn-lg btn-danger"><a href="index.html" class="text-light">HOME</a></button>
+                            <button class="btn-lg btn-warning mx-sm-2 mx-1 text-light" onclick="Cut()">RESET</button>
+                        </div>`;
             document.getElementById("hour").innerHTML="00";
             document.getElementById("minute").innerHTML="00";
             document.getElementById("second").innerHTML="00";
             document.getElementById("cover").style.display="none";
-            document.getElementById("top").style.display="none";
-            document.getElementById("picture").style.display="none";
-            document.getElementById("nexttop").style.display="flex";
-            
-            
-           
+            document.getElementById("content").style.display="none";
+            document.getElementById("xchoice").style.display="none";
+            document.getElementById("layout").style.display="flex";
+                
         }
-         function setSize() {
+        var addtb = document.getElementById('tablewrap');
+        function setSize() {
             n=0;
             k=0;
             nube=0;
@@ -242,14 +297,10 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             }
             document.getElementById("table").innerHTML=text;
             /*Thiết lập đơn vị theo kích thước màn hình*/
-            if (window.innerHeight<window.innerWidth) {
-                setsize = Math.floor(window.innerHeight - getOffset(idtable).top-20);
+            if (addtb.offsetHeight<addtb.offsetWidth) {
+                setsize = Math.floor(addtb.offsetHeight);
             } else {
-                if(Math.floor(window.innerHeight - getOffset(idtable).top-20)<Math.floor(window.innerWidth-10)) {
-                    setsize = Math.floor(window.innerHeight - getOffset(idtable).top-20);
-                } else {
-                    setsize = Math.floor(window.innerWidth-10);
-                }  
+                setsize = Math.floor(addtb.offsetWidth); 
             }
             if (setsize%sizemain==0) {
                 setsize = setsize;
@@ -362,6 +413,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             }
         }
         function Cut() {
+            setDisplay();
             setLayout();
             setSize();
             
@@ -404,35 +456,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                 k=k+0.1;
             }
         }
-        //Hàm chọn kích thước
-        function choosesize(elmn,clr0,clr1){
-            sizemain=clr0;
-            for (let i=0;i<document.querySelectorAll('.size').length;i++) {
-                document.querySelectorAll('.size')[i].style.outline = 'none';
-            }
-            elmn.style.outline = `5px solid ${btn[clr1]}`;
-            if (choicesize == 0) {
-            choicesize += 1;
-            }
-            if ((choiceimage+choicesize) == 2) {
-                Cut();
-            }
-        }
-        //Hàm chọn ảnh
-        function picture() {
-            addpic.style.backgroundImage=`url('${srcpic[srcrandom]}')`;
-            addpic.style.borderRadius="50px";
-            adds = addpic.style.backgroundImage.slice(5,-2);
-            document.querySelector("#img1 button").innerHTML= 'Selected default image!';
-            document.querySelector("#img1 label").innerHTML= 'Click me to select your image!';
-            document.getElementById('sl_image').value = "";
-            if (choiceimage == 0) {
-                choiceimage += 1;
-            }
-            if ((choiceimage+choicesize) == 2) {
-                Cut();
-            }
-        }
+        
         //Hàm bắt đầu chơi
         var visible;
         function start(){

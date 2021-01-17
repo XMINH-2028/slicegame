@@ -11,7 +11,7 @@
 <body ontouchstart="countTouches(event)" ontouchend="countTouches(event)">
         <div class="container-fluid d-flex flex-column" id="main">
             <h1 class="h1 text-center text-primary pt-2 w-100 m-0" id="xchoice">X-SLIDE</h1>
-            <div class="d-flex py-2" id='content'>
+            <div class="py-2" id='content'>
                 <div id="top" class="d-flex flex-column py-2">
                     <h3 class="h3 text-center m-0" id="selectsize">SELECT SIZE</h3>
                     <div class="d-flex mx-0">
@@ -35,14 +35,15 @@
                     </div>             
                 </div>
             </div>
-            <div id="nexttop" class='justify-content-center align-items-center'>
-                
-            </div>    
-            <div class="position-relative" id="tablewrap">
-                <table cellspacing="0px" class="mx-auto" id="table">
-                </table>
-                <div id="cover"></div>
-            </div>    
+            <div id="layout">
+                <div id="nexttop" class='justify-content-center align-items-center flex-column'>    
+                </div>    
+                <div class="position-relative py-3 justify-content-center align-items-center" id="tablewrap">
+                    <table cellspacing="0px" id="table">
+                    </table>
+                    <div id="cover"></div>
+                </div>   
+            </div> 
         </div>
          
     <script src='index.js'></script>

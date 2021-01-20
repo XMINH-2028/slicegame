@@ -260,6 +260,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
         function setDisplay() {
             if(screen.width<1360) {
                 document.body.style.overflow = 'hidden';
+                document.body.style.height = window.innerHeight +'px';
                 document.getElementById('main').style.height = window.innerHeight +'px';
                 saveheight = document.body.offsetHeight;
                 savewidth = document.body.offsetWidth;
@@ -278,6 +279,10 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                     setRow();
                 }
             } else {
+                document.getElementById('main').style.transform = `rotate(0deg) translateX(0px)`;
+                document.getElementById('main').style.height = '100vh';
+                document.getElementById('main').style.width = '100%';
+                document.body.style.height = '100vh';
                 document.getElementById('main').style.height = '100vh';
                 document.body.style.overflow = 'auto';
                 if (window.innerHeight<window.innerWidth/1.2) {

@@ -13,9 +13,7 @@ td {
     padding: 0px;
     overflow: hidden;
 }
-body {
-    height:100vh;
-}
+
 #main {
     padding: 0 10px !important;
     min-width: 280px;

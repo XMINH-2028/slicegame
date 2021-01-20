@@ -260,6 +260,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
         function setDisplay() {
             if(screen.width<1360) {
                 document.body.style.overflow = 'hidden';
+                document.body.style.height = window.innerHeight +'px';
                 document.getElementById('main').style.height = window.innerHeight +'px';
                 saveheight = document.body.offsetHeight;
                 savewidth = document.body.offsetWidth;
@@ -278,8 +279,9 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                     setRow();
                 }
             } else {
-                document.getElementById('main').style.height = '100vh';
+                document.body.style.height = '100vh';
                 document.body.style.overflow = 'auto';
+                document.getElementById('main').style.height = '100vh';
                 if (window.innerHeight<window.innerWidth/1.2) {
                     setRow();
                 } else {
@@ -320,6 +322,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                 
         }
         var addtb = document.getElementById('tablewrap');
+        var sizeh,sizew; /*Kích thước khung cắt ảnh*/
         function setSize() {
             n=0;
             k=0;
@@ -335,10 +338,31 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             }
             document.getElementById("table").innerHTML=text;
             /*Thiết lập đơn vị theo kích thước màn hình*/
-            if (addtb.offsetHeight-30<addtb.offsetWidth) {
-                setsize = Math.floor(addtb.offsetHeight-30);
+            if (saveh<addtb.offsetHeight-30 && savew<addtb.offsetWidth) {
+                setsize = Math.floor(saveh);
             } else {
-                setsize = Math.floor(addtb.offsetWidth); 
+                if (addtb.offsetHeight-30<addtb.offsetWidth) {
+                    if (saveh>savew) {
+                        setsize = Math.floor(addtb.offsetHeight-30); 
+                    } else {
+                        if (savew/saveh>addtb.offsetWidth/(addtb.offsetHeight-30)) {
+                            setsize = Math.floor(addtb.offsetHeight-30); 
+                        } else {
+                            setsize = Math.floor(addtb.offsetWidth);
+                        }
+                    }
+                    
+                } else {
+                    if (saveh<savew) {
+                        setsize = Math.floor(addtb.offsetWidth); 
+                    } else {
+                        if (saveh/savew>(addtb.offsetHeight-30)/addtb.offsetWidth) {
+                            setsize = Math.floor(addtb.offsetWidth);  
+                        } else {
+                            setsize = Math.floor(addtb.offsetHeight-30);
+                        }
+                    } 
+                }
             }
             if (setsize%sizemain==0) {
                 setsize = setsize;

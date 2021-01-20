@@ -28,7 +28,8 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
         var btn=['rgba(0,123,255,0.5)','rgba(40,167,69,0.5)','rgba(255,193,7,0.5)','rgba(220,53,69,0.5)'];
         var srcrandom="";
         var saveh,savew,idpich,idpicw;
-
+        var saveheight,savewidth;
+        var reSizenb=0;
 
         function getSize(a,b) {
             if(screen.width<1360) {
@@ -36,6 +37,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             } else {
                 document.getElementById('main').style.height = '100vh';
             }
+    
             idpich=idpic.offsetHeight;
             idpicw= idpic.offsetWidth;
             if(b>a) {
@@ -137,14 +139,16 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
 
         setPic();
 
-
+        
         window.onresize=function(){
             if (layout===1) {
                 setDisplay();
                 setSize();
                 cutResize();
             } else {
-                setPic();
+                if (reSizenb===0) {
+                   setPic(); 
+                } 
             } 
         }
 
@@ -160,7 +164,9 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             choicesize += 1;
             }
             if ((choiceimage+choicesize) == 2) {
-                Cut();
+                setTimeout(()=>{
+                    Cut();
+                },6)
             }
         }
 
@@ -176,7 +182,11 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                 choiceimage += 1;
             }
             if ((choiceimage+choicesize) == 2) {
-                Cut();
+                reSizenb=1;
+                setTimeout(()=>{
+                    Cut();
+                },6)
+                
             }
         }
         //Hàm chọn ảnh
@@ -192,7 +202,10 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                 choiceimage += 1;
             }
             if ((choiceimage+choicesize) == 2) {
-                Cut();
+                reSizenb=1;
+                setTimeout(()=>{
+                    Cut();
+                },6)
             }
         }
 
@@ -227,27 +240,52 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             }
             return { top: _y, left: _x };
         }
+
+        function setRow() {
+            document.getElementById('layout').style.flexDirection = 'row';
+            document.getElementById('nexttop').style.width = '45%';
+            document.getElementById('nexttop').style.minWidth = '260px';
+            document.getElementById('nexttop').style.height = '100%';
+            document.getElementById('tablewrap').style.width = '55%';
+            document.getElementById('tablewrap').style.height = '100%';
+        }
+        function setColumn() {
+            document.getElementById('layout').style.flexDirection = 'column';
+            document.getElementById('nexttop').style.width = '100%';
+            document.getElementById('nexttop').style.minWidth = 'auto';
+            document.getElementById('nexttop').style.height = '30%';
+            document.getElementById('tablewrap').style.width = '100%';
+            document.getElementById('tablewrap').style.height = '70%';
+        }
         function setDisplay() {
-            if (window.innerHeight<window.innerWidth/1.5) {
-                document.getElementById('layout').style.flexDirection = 'row';
-                document.getElementById('nexttop').style.width = '45%';
-                document.getElementById('nexttop').style.minWidth = '260px';
-                document.getElementById('nexttop').style.height = '100%';
-                document.getElementById('tablewrap').style.width = '55%';
-                document.getElementById('tablewrap').style.height = '100%';
-            } else {
-                document.getElementById('layout').style.flexDirection = 'column';
-                document.getElementById('nexttop').style.width = '100%';
-                document.getElementById('nexttop').style.minWidth = 'auto';
-                document.getElementById('nexttop').style.height = '30%';
-                document.getElementById('tablewrap').style.width = '100%';
-                document.getElementById('tablewrap').style.height = '70%';
-            }
             if(screen.width<1360) {
+                document.body.style.overflow = 'hidden';
                 document.getElementById('main').style.height = window.innerHeight +'px';
+                saveheight = document.body.offsetHeight;
+                savewidth = document.body.offsetWidth;
+                if (window.innerHeight<window.innerWidth) {
+                    if (saveh<savew) {
+                        document.body.style.transform = 'rotate(0deg)';
+                        setRow();
+                    } else {
+                        document.getElementById('main').style.height = savewidth+'px';
+                        document.getElementById('main').style.width = saveheight+'px';
+                        setColumn();
+                        document.getElementById('main').style.transform = `rotate(-90deg) translateX(${(savewidth-saveheight)/2}px)`;
+                    }
+                } else {
+                    document.body.style.transform = 'rotate(0deg)';
+                    setRow();
+                }
             } else {
                 document.getElementById('main').style.height = '100vh';
-            }
+                document.body.style.overflow = 'auto';
+                if (window.innerHeight<window.innerWidth/1.2) {
+                    setRow();
+                } else {
+                    setColumn();
+                }
+            }    
         }
         function setLayout(){
             layout=1;

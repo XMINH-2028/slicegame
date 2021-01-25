@@ -27,6 +27,7 @@ td {
 
 #nexttop .btn-lg {
     padding: 5px 15px;
+    min-width: 90px;
 }
 #nexttop .btn-danger {
     padding: 0 !important;
@@ -35,6 +36,9 @@ td {
     display: block;
     padding: 5px 15px;
     text-decoration: none;
+} 
+#nexttop {
+    flex-direction: column;
 }
 #cover {
     position: absolute;
@@ -132,7 +136,7 @@ td {
         font-size: 1rem !important;
     }
     #xchoice {
-        font-size: 1.2rem !important;
+        font-size: 1.5rem !important;
     }
     
 }

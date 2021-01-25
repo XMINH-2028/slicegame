@@ -30,7 +30,8 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
         var saveh,savew,idpich,idpicw;
         var saveheight,savewidth;
         var reSizenb=0;
-
+        const $ = document.querySelector.bind(document);
+        const $$ = document.querySelectorAll.bind(document);
         function getSize(a,b) {
             if(screen.width<1360) {
                 document.getElementById('main').style.height = window.innerHeight +'px';
@@ -44,32 +45,32 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                 if (idpicw/(b/a)<=idpich) {
                     addpic.style.height = idpicw/(b/a)+'px';
                     addpic.style.width = idpicw+'px';
-                    document.querySelector("#picture>div>div").style.bottom = idpich-idpicw/(b/a)+'px';
-                    document.querySelector("#imgrd button").style.width = idpicw+'px';
-                    document.querySelector("#imgrd label").style.width = idpicw+'px';
+                    $("#picture>div>div").style.bottom = idpich-idpicw/(b/a)+'px';
+                    $("#imgrd button").style.width = idpicw+'px';
+                    $("#imgrd label").style.width = idpicw+'px';
                 } else {
                     addpic.style.height = idpich+'px';
                     addpic.style.width = (b/a)*idpich+'px';
-                    document.querySelector("#picture>div>div").style.bottom ='0px';
-                    document.querySelector("#imgrd button").style.width = (b/a)*idpich+'px';
-                    document.querySelector("#imgrd label").style.width = (b/a)*idpich+'px';
+                    $("#picture>div>div").style.bottom ='0px';
+                    $("#imgrd button").style.width = (b/a)*idpich+'px';
+                    $("#imgrd label").style.width = (b/a)*idpich+'px';
                 }       
             } else {
                 if (idpich/(a/b)<=idpicw) {
                     addpic.style.height = idpich+'px';
                     addpic.style.width = idpich/(a/b)+'px';
-                    document.querySelector("#picture>div>div").style.bottom = '0px';
-                    document.querySelector("#imgrd button").style.width = idpich/(a/b)+'px';
-                    document.querySelector("#imgrd label").style.width = idpich/(a/b)+'px';
+                    $("#picture>div>div").style.bottom = '0px';
+                    $("#imgrd button").style.width = idpich/(a/b)+'px';
+                    $("#imgrd label").style.width = idpich/(a/b)+'px';
                 } else {
                     addpic.style.height = (a/b)*idpicw+'px';
                     addpic.style.width = idpicw+'px';
-                    document.querySelector("#picture>div>div").style.bottom = idpich-(a/b)*idpicw+'px';
-                    document.querySelector("#imgrd button").style.width = idpicw+'px';
-                    document.querySelector("#imgrd label").style.width = idpicw+'px';
+                    $("#picture>div>div").style.bottom = idpich-(a/b)*idpicw+'px';
+                    $("#imgrd button").style.width = idpicw+'px';
+                    $("#imgrd label").style.width = idpicw+'px';
                 }   
             }
-            setFont(document.querySelector("#imgrd button"),document.querySelector("#imgrd label"));
+            setFont($("#imgrd button"),$("#imgrd label"));
         }
         function setFont(a,b) {
             var str1 = a.innerHTML;
@@ -81,8 +82,8 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             } else {
                 str=str1;
             }
-            document.querySelector("#imgrd button").style.fontSize = w/str.length*1.8+'px';
-            document.querySelector("#imgrd label").style.fontSize = w/str.length*1.8+'px';
+            $("#imgrd button").style.fontSize = w/str.length*1.8+'px';
+            $("#imgrd label").style.fontSize = w/str.length*1.8+'px';
            
         }
         
@@ -93,9 +94,9 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                         document.getElementById('top').style.height = '100%';
                         document.getElementById('picture').style.width = '50%';
                         document.getElementById('picture').style.height = '100%';
-                        document.querySelector("#top>div").style.flexDirection = 'column';
-                        for (let i=0;i<document.querySelectorAll("#top button").length;i++){
-                            document.querySelectorAll("#top button")[i].style.minWidth = '100px';
+                        $("#top>div").style.flexDirection = 'column';
+                        for (let i=0;i<$$("#top button").length;i++){
+                            $$("#top button")[i].style.minWidth = '100px';
                         }
                         if (srcrandom==="") {
                             srcrandom=Math.floor(Math.random()*12);
@@ -114,9 +115,9 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                         document.getElementById('top').style.height = '20%';
                         document.getElementById('picture').style.width = '100%';
                         document.getElementById('picture').style.height = '80%';
-                        document.querySelector("#top>div").style.flexDirection = 'row';
-                        for (let i=0;i<document.querySelectorAll("#top button").length;i++){
-                            document.querySelectorAll("#top button")[i].style.minWidth = 'auto';
+                        $("#top>div").style.flexDirection = 'row';
+                        for (let i=0;i<$$("#top button").length;i++){
+                            $$("#top button")[i].style.minWidth = 'auto';
                         }
                         if (srcrandom==="") {
                             srcrandom=Math.floor(Math.random()*12);
@@ -131,8 +132,8 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                         }
                     } 
                     setTimeout(()=>{
-                            document.querySelector("#picture>div>div").style.display="flex";
-                            setFont(document.querySelector("#imgrd button"),document.querySelector("#imgrd label"))
+                            $("#picture>div>div").style.display="flex";
+                            setFont($("#imgrd button"),$("#imgrd label"))
                         },50)
         }
 
@@ -156,8 +157,8 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
          //Hàm chọn kích thước
         function choosesize(elmn,clr0,clr1){
             sizemain=clr0;
-            for (let i=0;i<document.querySelectorAll('.size').length;i++) {
-                document.querySelectorAll('.size')[i].style.outline = 'none';
+            for (let i=0;i<$$('.size').length;i++) {
+                $$('.size')[i].style.outline = 'none';
             }
             elmn.style.outline = `5px solid ${btn[clr1]}`;
             if (choicesize == 0) {
@@ -172,41 +173,52 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
 
         //Upload image
         function Selectimg(event) {
-            addpic.setAttribute('src',URL.createObjectURL(event.target.files[0]));
             adds=URL.createObjectURL(event.target.files[0]);
-            addpic.style.borderRadius="30px";
-            document.querySelector("#imgrd>div label").style.borderRadius="0 0 30px 30px";
-            document.querySelector("#imgrd>div>button").innerHTML= 'Click me to select default image!';
-            document.querySelector("#imgrd>div label").innerHTML= 'Selected your image!';
-            if (choiceimage == 0) {
-                choiceimage += 1;
-            }
-            if ((choiceimage+choicesize) == 2) {
-                reSizenb=1;
-                setTimeout(()=>{
-                    Cut();
-                },6)
-                
-            }
+            addpic.setAttribute('src',URL.createObjectURL(event.target.files[0]));
+            addpic.addEventListener("load", function(){
+                saveh=this.naturalHeight;
+                savew=this.naturalWidth;
+                getSize(saveh,savew); 
+                addpic.style.borderRadius="30px";
+                $("#imgrd>div label").style.borderRadius="0 0 30px 30px";
+                $("#imgrd>div>button").innerHTML= 'Click me to select default image!';
+                $("#imgrd>div label").innerHTML= 'Selected your image!';
+                if (choiceimage == 0) {
+                    choiceimage += 1;
+                }
+                if ((choiceimage+choicesize) == 2) {
+                    reSizenb=1;
+                    setTimeout(()=>{
+                        Cut();
+                    },6)
+                    
+                }
+            })
         }
         //Hàm chọn ảnh
         function picture() {
-            addpic.setAttribute('src',srcpic[srcrandom]);
-            addpic.style.borderRadius="30px";
-            document.querySelector("#imgrd>div label").style.borderRadius="0 0 30px 30px";
             adds = srcpic[srcrandom];
-            document.querySelector("#imgrd>div>button").innerHTML= 'Selected default image!';
-            document.querySelector("#imgrd>div label").innerHTML= 'Click me to select your image!';
-            document.getElementById('sl_image').value = "";
-            if (choiceimage == 0) {
-                choiceimage += 1;
-            }
-            if ((choiceimage+choicesize) == 2) {
-                reSizenb=1;
-                setTimeout(()=>{
-                    Cut();
-                },6)
-            }
+            addpic.setAttribute('src',srcpic[srcrandom]);
+            addpic.addEventListener("load", function(){
+                saveh=this.naturalHeight;
+                savew=this.naturalWidth;
+                getSize(saveh,savew);
+                addpic.style.borderRadius="30px";
+                $("#imgrd>div label").style.borderRadius="0 0 30px 30px";
+                $("#imgrd>div>button").innerHTML= 'Selected default image!';
+                $("#imgrd>div label").innerHTML= 'Click me to select your image!';
+                document.getElementById('sl_image').value = "";
+                if (choiceimage == 0) {
+                    choiceimage += 1;
+                }
+                if ((choiceimage+choicesize) == 2) {
+                    reSizenb=1;
+                    setTimeout(()=>{
+                        Cut();
+                    },6)
+                } 
+            })
+            
         }
 
         function creatNext(){
@@ -243,23 +255,64 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
 
         function setRow() {
             document.getElementById('layout').style.flexDirection = 'row';
+            document.getElementById('nexttop').style.flexDirection = 'column';
+            document.getElementById('nexttop').style.minHeight = '180px';
             document.getElementById('nexttop').style.width = '45%';
             document.getElementById('nexttop').style.minWidth = '260px';
             document.getElementById('nexttop').style.height = '100%';
             document.getElementById('tablewrap').style.width = '55%';
             document.getElementById('tablewrap').style.height = '100%';
+           document.getElementById('topleft').style.flexDirection = 'row';
+            document.getElementById('time').style.fontSize = '1rem';
+            document.getElementById('xchoice1').style.fontSize = '2.5rem';
+            for (let i=0;i<$$('#nexttop .btn-lg a').length;i++) {
+                $$('#nexttop .btn-lg a')[i].style.padding = '3px 10px';
+            }
+            for (let i=0;i<$$('#nexttop .btn-lg').length;i++) {
+                $$('#nexttop .btn-lg')[i].style.padding = '3px 10px';
+            }
         }
         function setColumn() {
             document.getElementById('layout').style.flexDirection = 'column';
             document.getElementById('nexttop').style.width = '100%';
+            document.getElementById('nexttop').style.flexDirection = 'column';
+            document.getElementById('nexttop').style.minHeight = '180px';
             document.getElementById('nexttop').style.minWidth = 'auto';
             document.getElementById('nexttop').style.height = '30%';
             document.getElementById('tablewrap').style.width = '100%';
             document.getElementById('tablewrap').style.height = '70%';
+            document.getElementById('topleft').style.flexDirection = 'row';
+            document.getElementById('time').style.fontSize = '1rem';
+            document.getElementById('xchoice1').style.fontSize = '2.5rem';
+            for (let i=0;i<$$('#nexttop .btn-lg a').length;i++) {
+                $$('#nexttop .btn-lg a')[i].style.padding = '3px 10px';
+            }
+            for (let i=0;i<$$('#nexttop .btn-lg').length;i++) {
+                $$('#nexttop .btn-lg')[i].style.padding = '3px 10px';
+            }
+        }
+        function setColumnMb() {
+            document.getElementById('layout').style.flexDirection = 'row';
+            document.getElementById('nexttop').style.flexDirection = 'column';
+            document.getElementById('nexttop').style.minHeight = 'auto';
+            document.getElementById('nexttop').style.width = '20%';
+            document.getElementById('nexttop').style.minWidth = 'auto';
+            document.getElementById('nexttop').style.height = '100%';
+            document.getElementById('tablewrap').style.width = '80%';
+            document.getElementById('tablewrap').style.height = '100%';
+            document.getElementById('topleft').style.flexDirection = 'column';
+            document.getElementById('time').style.fontSize = '13px';
+            document.getElementById('xchoice1').style.fontSize = '28px';
+            for (let i=0;i<$$('#nexttop .btn-lg a').length;i++) {
+                $$('#nexttop .btn-lg a')[i].style.padding = '0 10px';
+            }
+            for (let i=0;i<$$('#nexttop .btn-lg').length;i++) {
+                $$('#nexttop .btn-lg')[i].style.padding = '0 10px';
+            }
         }
         function setDisplay() {
-            if(screen.width<1360) {
-                document.body.style.overflow = 'hidden';
+            if(screen.width<1024) {
+                /*document.body.style.overflow = 'hidden';
                 document.body.style.height = window.innerHeight +'px';
                 document.getElementById('main').style.height = window.innerHeight +'px';
                 saveheight = document.body.offsetHeight;
@@ -277,10 +330,16 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                 } else {
                     document.body.style.transform = 'rotate(0deg)';
                     setRow();
+                }*/
+                document.getElementById('main').style.height = window.innerHeight +'px';
+                if (window.innerHeight<window.innerWidth/1.2) {
+                    setColumnMb();
+                } else {
+                    setColumn();
                 }
             } else {
-                document.body.style.height = '100vh';
-                document.body.style.overflow = 'auto';
+                /*document.body.style.height = '100vh';
+                document.body.style.overflow = 'auto';*/
                 document.getElementById('main').style.height = '100vh';
                 if (window.innerHeight<window.innerWidth/1.2) {
                     setRow();
@@ -297,8 +356,8 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             sd=0;
             me=0;
             hr=0; 
-            document.getElementById("nexttop").innerHTML=`<h1 class="h1 text-center text-primary pt-2 w-100 mb-3" id="xchoice1">X-SLIDE</h1>
-                        <div class="time d-flex justify-content-center align-items-center mb-2">
+            document.getElementById("nexttop").innerHTML=`<h1 class="h1 text-center text-primary pt-2 mb-3" id="xchoice1">X-SLIDE</h1>
+                        <div class="time d-flex justify-content-center align-items-center mb-2" id='time'>
                             <svg width="3em" height="3em" viewBox="0 0 16 16" class="bi bi-alarm text-primary" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M8 15A6 6 0 1 0 8 3a6 6 0 0 0 0 12zm0 1A7 7 0 1 0 8 2a7 7 0 0 0 0 14z"/>
                                 <path fill-rule="evenodd" d="M8 4.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.053.224l-1.5 3a.5.5 0 1 1-.894-.448L7.5 8.882V5a.5.5 0 0 1 .5-.5z"/>
@@ -338,57 +397,122 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             }
             document.getElementById("table").innerHTML=text;
             /*Thiết lập đơn vị theo kích thước màn hình*/
-            if (saveh<addtb.offsetHeight-30 && savew<addtb.offsetWidth) {
-                setsize = Math.floor(saveh);
+            if (saveh<=addtb.offsetHeight-30 && savew<=addtb.offsetWidth) {
+                sizeh = Math.floor(saveh);
+                sizew = 0;
             } else {
                 if (addtb.offsetHeight-30<addtb.offsetWidth) {
                     if (saveh>savew) {
-                        setsize = Math.floor(addtb.offsetHeight-30); 
+                        sizeh = Math.floor(addtb.offsetHeight-30); 
+                        sizew = 0;
                     } else {
                         if (savew/saveh>addtb.offsetWidth/(addtb.offsetHeight-30)) {
-                            setsize = Math.floor(addtb.offsetHeight-30); 
+                            sizew = Math.floor(addtb.offsetWidth);
+                            sizeh = 0;
                         } else {
-                            setsize = Math.floor(addtb.offsetWidth);
+                            sizeh = Math.floor(addtb.offsetHeight-30); 
+                            sizew = 0;
                         }
                     }
                     
                 } else {
                     if (saveh<savew) {
-                        setsize = Math.floor(addtb.offsetWidth); 
+                        sizew = Math.floor(addtb.offsetWidth);
+                        sizeh = 0; 
                     } else {
                         if (saveh/savew>(addtb.offsetHeight-30)/addtb.offsetWidth) {
-                            setsize = Math.floor(addtb.offsetWidth);  
+                            sizeh = Math.floor(addtb.offsetHeight-30); 
+                            sizew = 0;  
                         } else {
-                            setsize = Math.floor(addtb.offsetHeight-30);
+                            sizew = Math.floor(addtb.offsetWidth);
+                            sizeh = 0; 
                         }
                     } 
                 }
             }
-            if (setsize%sizemain==0) {
-                setsize = setsize;
-            } else {
-                for (i=1;i<=(sizemain-1);i++){
-                    setsize=setsize-1;
-                    if (setsize%sizemain==0){
-                        i=sizemain;
+            if (sizeh!=0) {
+                if (sizeh%sizemain==0) {
+                    sizeh = sizeh;
+                    sizew = Math.floor(sizeh*(savew/saveh));
+                    if (sizew%sizemain==0) {
+                        sizew = sizew;
+                    } else {
+                        for (i=1;i<=(sizemain-1);i++){
+                            sizew=sizew-1;
+                            if (sizew%sizemain==0){
+                                i=sizemain;
+                            }
+                        }
+                    }       
+                } else {
+                    for (i=1;i<=(sizemain-1);i++){
+                        sizeh=sizeh-1;
+                        if (sizeh%sizemain===0){
+                            i=sizemain;
+                            sizew = Math.floor(sizeh*(savew/saveh));
+                            if (sizew%sizemain==0) {
+                                sizew = sizew;
+                            } else {
+                                for (i=1;i<=(sizemain-1);i++){
+                                    sizew=sizew-1;
+                                    if (sizew%sizemain==0){
+                                        i=sizemain;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } else if (sizew!=0) {
+                if (sizew%sizemain==0) {
+                    sizew = sizew;
+                    sizeh = Math.floor(sizew*(saveh/savew));
+                    if (sizeh%sizemain==0) {
+                        sizeh = sizeh;
+                    } else {
+                        for (i=1;i<=(sizemain-1);i++){
+                            sizeh=sizeh-1;
+                            if (sizeh%sizemain==0){
+                                i=sizemain;
+                            }
+                        }
+                    }
+                } else {
+                    for (i=1;i<=(sizemain-1);i++){
+                        sizew=sizew-1;
+                        if (sizew%sizemain===0){
+                            i=sizemain;
+                            sizeh = Math.floor(sizew*(saveh/savew));
+                            if (sizeh%sizemain==0) {
+                                sizeh = sizeh;
+                            } else {
+                                for (i=1;i<=(sizemain-1);i++){
+                                    sizeh=sizeh-1;
+                                    if (sizeh%sizemain==0){
+                                        i=sizemain;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
+            
             for (i=1;i<=sizemain*sizemain;i++){
                 document.getElementById("td"+i).style.position="absolute";
                 document.getElementById("tdtd"+i).style.animationName="example";
             }
           
-            document.getElementById("table").style.width=setsize +"px";
-            document.getElementById("table").style.height=setsize +"px";
+            document.getElementById("table").style.width=sizew +"px";
+            document.getElementById("table").style.height=sizeh +"px";
             for (i=1;i<=sizemain*sizemain;i++){
-                document.getElementById("td"+i).style.height=setsize+"px";
-                document.getElementById("td"+i).style.width=setsize+"px";
+                document.getElementById("td"+i).style.height=sizeh+"px";
+                document.getElementById("td"+i).style.width=sizew+"px";
             }
 
             /*Vị trí top của khung chứa ảnh căt-dùng cho random*/
             for (i = 1; i <= sizemain*sizemain; i++){
-                topimg[i]=n*setsize/sizemain;
+                topimg[i]=n*sizeh/sizemain;
                 k++;
                 if (k%sizemain == 0){
                     n++;
@@ -397,7 +521,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             /*Vị trí left của khung chứa ảnh căt-dùng cho random*/
             n=0;
             for (i = 1; i <= sizemain*sizemain; i++){
-                leftimg[i]=n*setsize/sizemain;
+                leftimg[i]=n*sizew/sizemain;
                 n++;
                 if (n%sizemain == 0){
                     n = 0;
@@ -407,7 +531,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             n=0;
             k=0;
             for (i = 1; i <= sizemain*sizemain; i++){
-                topclip[i]=n*setsize/sizemain;
+                topclip[i]=n*sizeh/sizemain;
                 k++;
                 if (k%sizemain == 0){
                     n++;
@@ -416,7 +540,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             /*Vị trí left của khung ảnh cắt-dùng cho random*/
             n=0;
             for (i = 1; i <= sizemain*sizemain; i++){
-                leftclip[i]=n*setsize/sizemain;
+                leftclip[i]=n*sizew/sizemain;
                 n++;
                 if (n%sizemain == 0){
                     n = 0;
@@ -432,20 +556,20 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             /*Lấy các thông số khi thực hiện cắt cho các ô ảnh từ 1 đến 25*/ 
             n=0;
             t=0;
-            r=setsize/sizemain;
-            b=setsize/sizemain;
+            r=sizew/sizemain;
+            b=sizeh/sizemain;
             l=0;
             for (i = 1; i <= sizemain*sizemain; i++){
                 cliptop[i]=t;
                 clipright[i]=r;
                 clipbottom[i]=b;
                 clipleft[i]=l;
-                r=r + setsize/sizemain;
-                l=l + setsize/sizemain;
-                if (r == setsize*(sizemain+1)/sizemain){
-                    t = t + setsize/sizemain;
-                    b = b + setsize/sizemain;
-                    r = setsize/sizemain;
+                r=r + sizew/sizemain;
+                l=l + sizew/sizemain;
+                if (r == sizew*(sizemain+1)/sizemain){
+                    t = t + sizeh/sizemain;
+                    b = b + sizeh/sizemain;
+                    r = sizew/sizemain;
                     l = 0;
                 }
             }
@@ -475,8 +599,8 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             }
         }
         function Cut() {
-            setDisplay();
             setLayout();
+            setDisplay();
             setSize();
             
             /*Random vị trí khung chứa ảnh cắt*/ 

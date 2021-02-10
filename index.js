@@ -1,4 +1,4 @@
-var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
+var i,j,k,n,t,r,b,l,x,y,timer,nbtd; 
         var tdnumber=[0];
         var imgnumber=[0];
         var topimg=[0];
@@ -171,8 +171,11 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             }
         }
 
+
+        var save_select=0;
         //Upload image
         function Selectimg(event) {
+            save_select=1;
             adds=URL.createObjectURL(event.target.files[0]);
             addpic.setAttribute('src',URL.createObjectURL(event.target.files[0]));
             addpic.addEventListener("load", function(){
@@ -197,6 +200,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
         }
         //Hàm chọn ảnh
         function picture() {
+            save_select=0;
             adds = srcpic[srcrandom];
             addpic.setAttribute('src',srcpic[srcrandom]);
             addpic.addEventListener("load", function(){
@@ -227,17 +231,41 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             node.setAttribute('class','btn-lg btn-success text-light');
             node.setAttribute('onclick','Next()');
             node.setAttribute('id','next');
+            if(screen.width<1024) {
+               node.style.padding = '0px 10px';
+            } else {
+                node.style.padding = '3px 10px';
+            }
             document.getElementById('topleft').appendChild(node);
         }
 
         //Next
-        function Next() {
-            if(srcrandom<11) {
-                srcrandom+=1;
+        var count_door=0;
+        function Next() { 
+        let y=document.getElementById(`cheerup`);
+        y.play();
+        if (count_door<11) {
+            count_door+=1;
+        } else {
+            count_door=0;
+            sizemain+=1;
+        }
+            if(save_select===0) {
+                if(srcrandom<11) {
+                    srcrandom+=1;
+                } else {
+                    srcrandom=0;
+                }
+                adds=srcpic[srcrandom];
+                addpic.setAttribute('src',srcpic[srcrandom]);
+                addpic.addEventListener("load", function(){
+                    saveh=this.naturalHeight;
+                    savew=this.naturalWidth;
+                })
             } else {
-                srcrandom=0;
+                sizemain+=1;
             }
-            adds=srcpic[srcrandom];
+            
             Cut();
             document.getElementById('xchoice').innerHTML='X-SLICE';
         }
@@ -267,9 +295,11 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             document.getElementById('xchoice1').style.fontSize = '2.5rem';
             for (let i=0;i<$$('#nexttop .btn-lg a').length;i++) {
                 $$('#nexttop .btn-lg a')[i].style.padding = '3px 10px';
+                 $$('#nexttop .btn-lg a')[i].style.marginBottom = '0px';
             }
             for (let i=0;i<$$('#nexttop .btn-lg').length;i++) {
                 $$('#nexttop .btn-lg')[i].style.padding = '3px 10px';
+                 $$('#nexttop .btn-lg')[i].style.marginBottom = '0px';
             }
         }
         function setColumn() {
@@ -286,12 +316,14 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             document.getElementById('xchoice1').style.fontSize = '2.5rem';
             for (let i=0;i<$$('#nexttop .btn-lg a').length;i++) {
                 $$('#nexttop .btn-lg a')[i].style.padding = '3px 10px';
+                $$('#nexttop .btn-lg a')[i].style.marginBottom = '0px';
             }
             for (let i=0;i<$$('#nexttop .btn-lg').length;i++) {
                 $$('#nexttop .btn-lg')[i].style.padding = '3px 10px';
+                 $$('#nexttop .btn-lg')[i].style.marginBottom = '0px';
             }
         }
-        function setColumnMb() {
+        function setRowMb() {
             document.getElementById('layout').style.flexDirection = 'row';
             document.getElementById('nexttop').style.flexDirection = 'column';
             document.getElementById('nexttop').style.minHeight = 'auto';
@@ -305,10 +337,34 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             document.getElementById('xchoice1').style.fontSize = '28px';
             for (let i=0;i<$$('#nexttop .btn-lg a').length;i++) {
                 $$('#nexttop .btn-lg a')[i].style.padding = '0 10px';
+                $$('#nexttop .btn-lg a')[i].style.marginBottom = '4px';
             }
             for (let i=0;i<$$('#nexttop .btn-lg').length;i++) {
                 $$('#nexttop .btn-lg')[i].style.padding = '0 10px';
+                $$('#nexttop .btn-lg')[i].style.marginBottom = '4px';
             }
+        }
+        function setColumnMb() {
+            document.getElementById('layout').style.flexDirection = 'column';
+            document.getElementById('nexttop').style.flexDirection = 'column';
+            document.getElementById('nexttop').style.minHeight = '140px';
+            document.getElementById('nexttop').style.width = '100%';
+            document.getElementById('nexttop').style.minWidth = 'auto';
+            document.getElementById('nexttop').style.height = '15%';
+            document.getElementById('tablewrap').style.width = '100%';
+            document.getElementById('tablewrap').style.height = '85%';
+            document.getElementById('topleft').style.flexDirection = 'row';
+            document.getElementById('time').style.fontSize = '13px';
+            document.getElementById('xchoice1').style.fontSize = '28px';
+            for (let i=0;i<$$('#nexttop .btn-lg a').length;i++) {
+                $$('#nexttop .btn-lg a')[i].style.padding = '0 10px';
+                 $$('#nexttop .btn-lg a')[i].style.marginBottom = '0px';
+            }
+            for (let i=0;i<$$('#nexttop .btn-lg').length;i++) {
+                $$('#nexttop .btn-lg')[i].style.padding = '0 10px';
+                 $$('#nexttop .btn-lg')[i].style.marginBottom = '0px';
+            }
+
         }
         function setDisplay() {
             if(screen.width<1024) {
@@ -333,9 +389,9 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                 }*/
                 document.getElementById('main').style.height = window.innerHeight +'px';
                 if (window.innerHeight<window.innerWidth/1.2) {
-                    setColumnMb();
+                    setRowMb();
                 } else {
-                    setColumn();
+                    setColumnMb();
                 }
             } else {
                 /*document.body.style.height = '100vh';
@@ -368,7 +424,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                             <span id="hour" class="text-danger">00</span>:<span id="minute" class="text-warning">00</span>:<span id="second" class="text-success">00</span>
                         </div>
                         <div class="d-flex justify-content-center align-items-center mb-1" id="topleft">
-                            <button class="btn-lg btn-danger"><a href="index.html" class="text-light">HOME</a></button>
+                            <button class="btn-lg btn-danger"><a href="index.html" id='home' class="text-light">HOME</a></button>
                             <button class="btn-lg btn-warning mx-sm-2 mx-1 text-light" onclick="Cut()">RESET</button>
                         </div>`;
             document.getElementById("hour").innerHTML="00";
@@ -380,8 +436,19 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             document.getElementById("layout").style.display="flex";
                 
         }
+        document.getElementById('content').onmousedown = ()=>{
+            let x=document.getElementById(`cheerup`);
+            x.play();
+        }
+        function autoPlay(clr) {
+            let x=document.getElementById(`note${clr}`);
+            x.play();
+            let y=document.getElementById(`cheerup`);
+            y.pause();
+        }
         var addtb = document.getElementById('tablewrap');
         var sizeh,sizew; /*Kích thước khung cắt ảnh*/
+        var savenote = 0;
         function setSize() {
             n=0;
             k=0;
@@ -391,7 +458,17 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                 text += "<tr>";
                 for (j=1;j<=sizemain;j++){
                     nube += 1;
-                    text += "<td id='tdtd"+ nube +"'><img src='' alt='' id="+"'td"+ nube + "' onmousedown='set(event,this,"+ nube + ")' ontouchstart='set(event,this," + nube + ")'></td>";
+                    if(savenote<8) {
+                      savenote+=1; 
+                    } else {
+                        savenote=1;
+                    }
+                    text += `<td id='tdtd${nube}'>
+                        <img src='' alt='' id='td${nube}' onmousedown='set(event,this,${nube})' ontouchstart='set(event,this,${nube})' onclick='autoPlay(${nube})'>
+                        <audio id='note${nube}'>
+                          <source src='audio/note${savenote}.mp3' type='audio/mpeg'>
+                        </audio>
+                    </td>`;
                 }
                 text += "</tr>";
             }
@@ -602,6 +679,8 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             setLayout();
             setDisplay();
             setSize();
+            let y=document.getElementById(`cheerup`);
+            y.play();
             
             /*Random vị trí khung chứa ảnh cắt*/ 
             for (i = 1; i <= sizemain*sizemain;)
@@ -745,7 +824,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                 }
             }
             if (timercount == (sizemain*sizemain)) {
-                document.getElementById("xchoice").innerHTML="CONGRATULATION!";
+                document.getElementById("xchoice1").innerHTML="CONGRATULATION!";
                 document.getElementById("cover").style.display="block";
                 creatNext();
                 clearInterval(visible);

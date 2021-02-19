@@ -1,4 +1,5 @@
-var i,j,k,n,t,r,b,l,x,y,timer,nbtd; 
+var i,j,k,n,t,r,b,l,x,y,timer; 
+        var nbtd=0;
         var tdnumber=[0];
         var imgnumber=[0];
         var topimg=[0];
@@ -30,6 +31,9 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
         var saveh,savew,idpich,idpicw;
         var saveheight,savewidth;
         var reSizenb=0;
+        const note=['A2','A3','A4','A5','Ab2','Ab3','Ab4','Ab5','B2','B3','B4','B5','Bb2','Bb3',
+        'Bb4','Bb5','C3','C4','C5','C6','D3','D4','D5','D6','E2','E3','E4','E5',
+        'Eb3','Eb4','Eb5','F2','F3','F4','F5','G2','G3','G4','G5'];
         const $ = document.querySelector.bind(document);
         const $$ = document.querySelectorAll.bind(document);
         function getSize(a,b) {
@@ -153,6 +157,33 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             } 
         }
 
+        document.getElementById('content').onmousedown = ()=>{
+            let x=document.getElementById(`cheerup`);
+            x.play();
+        }
+
+        var zzz;
+        function autoPlay() {
+            let nb=0;
+            let x=document.getElementById(`cheerup`);
+            let y=0;
+            zzz=setInterval(()=>{
+                if (y<note.length) {
+                    x.setAttribute('src',`audio/${note[y]}.mp3`);
+                    x.play();
+                    y+=1; 
+                } else {
+                    x.pause();
+                    setTimeout(()=>{
+                        y=0;
+                        nb+=1;
+                        if(nb===3) {
+                            clearInterval(zzz);
+                        } 
+                    },500)
+                }
+            },600)
+        }
 
          //Hàm chọn kích thước
         function choosesize(elmn,clr0,clr1){
@@ -167,6 +198,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             if ((choiceimage+choicesize) == 2) {
                 setTimeout(()=>{
                     Cut();
+                    autoPlay();
                 },6)
             }
         }
@@ -193,6 +225,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                     reSizenb=1;
                     setTimeout(()=>{
                         Cut();
+                        autoPlay();
                     },6)
                     
                 }
@@ -219,6 +252,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                     reSizenb=1;
                     setTimeout(()=>{
                         Cut();
+                        autoPlay();
                     },6)
                 } 
             })
@@ -436,16 +470,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             document.getElementById("layout").style.display="flex";
                 
         }
-        document.getElementById('content').onmousedown = ()=>{
-            let x=document.getElementById(`cheerup`);
-            x.play();
-        }
-        function autoPlay(clr) {
-            let x=document.getElementById(`note${clr}`);
-            x.play();
-            let y=document.getElementById(`cheerup`);
-            y.pause();
-        }
+        
         var addtb = document.getElementById('tablewrap');
         var sizeh,sizew; /*Kích thước khung cắt ảnh*/
         var savenote = 0;
@@ -464,10 +489,8 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                         savenote=1;
                     }
                     text += `<td id='tdtd${nube}'>
-                        <img src='' alt='' id='td${nube}' onmousedown='set(event,this,${nube})' ontouchstart='set(event,this,${nube})' onclick='autoPlay(${nube})'>
-                        <audio id='note${nube}'>
-                          <source src='audio/note${savenote}.mp3' type='audio/mpeg'>
-                        </audio>
+                        <img src='' alt='' id='td${nube}'>
+                        <span onmousedown='set(event,this,${nube})' ontouchstart='set(event,this,${nube})'>${note[savenote]}</span>
                     </td>`;
                 }
                 text += "</tr>";
@@ -675,6 +698,49 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                 }
             }
         }
+        var result=[0];
+        var imgmark=[0];
+        var tdmark=[0];
+        function pow(x) {
+            let gt=0;
+            if(x===1) {
+                return 1;
+            } else {
+                return x*pow(x-1);
+            }
+        }
+        function test(n) {
+            var x=0;
+            for(let i=1;i<=n.length;i++) {
+                for(let j=i+1;j<=n.length;){
+                    if(n[i]===n[j]) {
+                        x=0;
+                        return false;
+                    } else {
+                        x=1;
+                        j++;
+                    }
+                }
+            }
+            if(x===1){return true};
+        }
+        function add(value,index,arr) {
+            if (value===index) {
+                for (let i=1;i<=index;i++) {
+                    arr[value]=i;
+                    if(test(arr)) {
+                        console.log(arr);
+                    }
+                }  
+            } else {
+                for(let j=1;j<=index;j++) {
+                    arr[value]=j;
+                    add(value+1,index,arr);
+                }
+            }
+        }
+        
+
         function Cut() {
             setLayout();
             setDisplay();
@@ -683,7 +749,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             y.play();
             
             /*Random vị trí khung chứa ảnh cắt*/ 
-            for (i = 1; i <= sizemain*sizemain;)
+            for (let i = 1; i <= sizemain*sizemain;)
             {
                 tdnumber[i]=Math.ceil(Math.random()*sizemain*sizemain);
                 k=0;
@@ -696,8 +762,10 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                     i = i + 1;
                 }
             }
+            tdmark=[...tdnumber];
+            console.log(tdnumber);
             /*Random vị trí ảnh nằm trong khung chứa*/ 
-            for (i = 1; i <= sizemain*sizemain;)
+            for (let i = 1; i <= sizemain*sizemain;)
             {
                 imgnumber[i]=Math.ceil(Math.random()*sizemain*sizemain);
                 k=0;
@@ -710,6 +778,29 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                     i = i + 1;
                 }
             }
+            imgmark=[...imgnumber];
+            console.log(imgnumber);
+            let mark=0;
+            for (let i = 1; i <= sizemain*sizemain;) {
+                if (tdmark[i]!==imgmark[i]) {
+                    for(let j=1;j<= sizemain*sizemain;j++) {
+                        if(tdmark[j]===imgmark[i]) {
+                            mark=j;
+                            console.log(mark);
+                        }
+                    }
+                    result[mark]=imgmark[mark];
+                    result[i]=imgmark[i];
+                    imgmark[mark]=result[i];
+                    imgmark[i]=result[mark];
+                    console.log(tdmark);
+                    console.log(imgmark);
+                } else {
+                    i++;
+                }
+            }
+            console.log(imgmark);
+            
             cutResize();
             /*Set animationDuration cho khung kết quả + tạo 2 mảng thể hiện sự nhập xuất của ảnh ở 
             phần ảnh random và ảnh kết quả + khai báo biến chứa ảnh đã bị ẩn ở phần kết quả khi thực
@@ -774,7 +865,11 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
         var savefirst=0;
         var savesecond=0;
         function set(e,elmn,clr){
+            let y=document.getElementById(`cheerup`);
+            y.setAttribute('src',`audio/${elmn.innerHTML}.mp3`);
+            y.play();
             e.preventDefault();
+            clearInterval(zzz);
             var timercount=0;
             if (timer===0) {
                 start();
@@ -782,10 +877,10 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
             }
             if (nbtd===0) {
                 nbtd = clr;/*Biến chứa vị trí ảnh xuất hiện ở phần kết quả*/
-                elmn.style.opacity = "0.4";
+                document.getElementById('tdtd'+clr).style.opacity = "0.4";
             } else if(nbtd===clr) {
                 nbtd = 0;
-                elmn.style.opacity = "1";
+                document.getElementById('tdtd'+clr).style.opacity = "1";
             } else {
                 for (i = 1; i <= sizemain*sizemain; i++){
                     if (tdnumber[i]===nbtd) {
@@ -808,7 +903,7 @@ var i,j,k,n,t,r,b,l,x,y,timer,nbtd;
                         b = clipbottom[imgnumber[i]];
                         l = clipleft[imgnumber[i]];
                         x.style.clip= "rect("+ t + "px,"+ r + "px,"+ b + "px,"+ l + "px)";
-                        x.style.opacity='1';
+                        document.getElementById('tdtd'+nbtd).style.opacity = "1";
                         savesecond=i;
                     }
                 }

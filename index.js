@@ -36,6 +36,17 @@ var i,j,k,n,t,r,b,l,x,y,timer;
         'Eb3','Eb4','Eb5','F2','F3','F4','F5','G2','G3','G4','G5'];
         const $ = document.querySelector.bind(document);
         const $$ = document.querySelectorAll.bind(document);
+
+        /*window.onload = ()=>{
+            let x=document.getElementById(`cheerup`);
+            x.autoplay = true;
+            x.loop = true;
+            x.load();
+            x.play();
+        }*/
+       
+        /*First layout*/
+
         function getSize(a,b) {
             if(screen.width<1360) {
                 document.getElementById('main').style.height = window.innerHeight +'px';
@@ -145,22 +156,8 @@ var i,j,k,n,t,r,b,l,x,y,timer;
         setPic();
 
         
-        window.onresize=function(){
-            if (layout===1) {
-                setDisplay();
-                setSize();
-                cutResize();
-            } else {
-                if (reSizenb===0) {
-                   setPic(); 
-                } 
-            } 
-        }
 
-        document.getElementById('content').onmousedown = ()=>{
-            let x=document.getElementById(`cheerup`);
-            x.play();
-        }
+
 
         var zzz;
         function autoPlay() {
@@ -168,21 +165,21 @@ var i,j,k,n,t,r,b,l,x,y,timer;
             let x=document.getElementById(`cheerup`);
             let y=0;
             zzz=setInterval(()=>{
-                if (y<note.length) {
-                    x.setAttribute('src',`audio/${note[y]}.mp3`);
+                if (y<arrResult.length) {
+                    x.setAttribute('src',`audio/${document.querySelectorAll('td span')[arrResult[y]-1].innerHTML}.mp3`);
                     x.play();
                     y+=1; 
                 } else {
-                    x.pause();
+                    /*x.pause();
                     setTimeout(()=>{
                         y=0;
                         nb+=1;
-                        if(nb===3) {
+                        if(nb===3) {*/
                             clearInterval(zzz);
-                        } 
-                    },500)
+                       /* } 
+                    },500)*/
                 }
-            },600)
+            },1000)
         }
 
          //Hàm chọn kích thước
@@ -197,8 +194,8 @@ var i,j,k,n,t,r,b,l,x,y,timer;
             }
             if ((choiceimage+choicesize) == 2) {
                 setTimeout(()=>{
+                    rdNumber(savenote);
                     Cut();
-                    autoPlay();
                 },6)
             }
         }
@@ -224,8 +221,8 @@ var i,j,k,n,t,r,b,l,x,y,timer;
                 if ((choiceimage+choicesize) == 2) {
                     reSizenb=1;
                     setTimeout(()=>{
+                        rdNumber(savenote);
                         Cut();
-                        autoPlay();
                     },6)
                     
                 }
@@ -251,58 +248,131 @@ var i,j,k,n,t,r,b,l,x,y,timer;
                 if ((choiceimage+choicesize) == 2) {
                     reSizenb=1;
                     setTimeout(()=>{
+                        rdNumber(savenote);
                         Cut();
-                        autoPlay();
                     },6)
                 } 
             })
             
         }
 
-        function creatNext(){
+
+        /*Main layout*/
+        function creatStart(){
             var node = document.createElement("button");
-            node.innerHTML="NEXT";
+            node.innerHTML="START";
             node.setAttribute('class','btn-lg btn-success text-light');
-            node.setAttribute('onclick','Next()');
-            node.setAttribute('id','next');
+            node.setAttribute('onclick','Start()');      
+            node.setAttribute('id','start');
             if(screen.width<1024) {
-               node.style.padding = '0px 10px';
+                node.style.padding = '0px 10px';
             } else {
                 node.style.padding = '3px 10px';
             }
             document.getElementById('topleft').appendChild(node);
         }
 
+        function Start() { 
+            autoPlay();
+            document.getElementById("cover").style.display="none";
+            if (timer===0) {
+                start();
+                timer=1;
+            }
+            document.getElementById('start').remove();
+        }
+
+        function creatNext(){
+            var node = document.createElement("button");
+            node.innerHTML="NEXT";
+            node.setAttribute('class','btn-lg btn-success text-light');
+            node.setAttribute('onclick','Next()');      
+            node.setAttribute('id','next');
+            if(screen.width<1024) {
+                node.style.padding = '0px 10px';
+            } else {
+                node.style.padding = '3px 10px';
+            }
+            document.getElementById('topleft').appendChild(node);
+        }
+
+
         //Next
         var count_door=0;
+       
         function Next() { 
-        let y=document.getElementById(`cheerup`);
-        y.play();
-        if (count_door<11) {
-            count_door+=1;
-        } else {
-            count_door=0;
-            sizemain+=1;
-        }
-            if(save_select===0) {
-                if(srcrandom<11) {
-                    srcrandom+=1;
-                } else {
-                    srcrandom=0;
-                }
-                adds=srcpic[srcrandom];
-                addpic.setAttribute('src',srcpic[srcrandom]);
-                addpic.addEventListener("load", function(){
-                    saveh=this.naturalHeight;
-                    savew=this.naturalWidth;
-                })
+        countColor=0;
+
+        if(save_select===0) {
+            if(srcrandom<11) {
+                srcrandom+=1;
             } else {
+                srcrandom=0;
+            }
+            if (count_door<11) {
+                count_door+=1;
+            } else {
+                count_door=0;
                 sizemain+=1;
             }
-            
+            rdNumber(savenote);
+            adds=srcpic[srcrandom];
+            addpic.setAttribute('src',srcpic[srcrandom]);
+            addpic.addEventListener("load", function(){
+                saveh=this.naturalHeight;
+                savew=this.naturalWidth;
+            })
+        } else {
+            sizemain+=1;
+            rdNumber(savenote);
             Cut();
-            document.getElementById('xchoice').innerHTML='X-SLICE';
         }
+            
+        }
+
+        function Home() {
+            document.getElementById("nexttop").style.display="none";
+            document.getElementById("content").style.display="flex";
+            document.getElementById("content").innerHTML=`<div id="top" class="d-flex flex-column py-2">
+                <h3 class="h3 text-center m-0" id="selectsize">SELECT SIZE</h3>
+                <div class="d-flex mx-0">
+                    <button class="btn btn-primary btn-md col-3 mx-auto rounded-0 size" onclick="choosesize(this,3,0)">Size 3*3</button>
+                    <button class="btn btn-success btn-md col-3 mx-auto rounded-0 size" onclick="choosesize(this,4,1)">Size 4*4</button>
+                    <button class="btn btn-warning btn-md col-3 mx-auto rounded-0 size" onclick="choosesize(this,5,2)">Size 5*5</button>
+                    <button class="btn btn-danger btn-md col-3 mx-auto rounded-0 size" onclick="choosesize(this,6,3)">Size 6*6</button>
+                </div>
+            </div>
+            <div id="picture" class="py-2 d-flex flex-column justify-content-center"> 
+                <h3 class="h3 text-center text-primary m-0" id="selectimage">SELECT IMAGE</h3>
+                <div class="position-relative d-flex justify-content-center mx-auto w-100" id="imgrd">
+                    <img src="" alt="" id="img1">
+                    <div class="flex-column position-absolute w-100 align-items-center">
+                        <button class="btn btn-md mb-2" onclick="picture()">Click me to select default image!</button>
+                        <form action="#" >
+                            <label for="sl_image" class="btn btn-md mb-0">Click me to select your image!</label>
+                            <input type="file" name="sl_image" id="sl_image" class="d-none" onchange="Selectimg(event)">
+                        </form>
+                    </div>
+                </div>             
+            </div>`;
+            document.getElementById("xchoice").style.display="block";
+            document.getElementById("layout").style.display="none";
+            choicesize = 0;
+            save_select = 0;
+            choiceimage = 0;
+            srcrandom="";
+           setTimeout(()=>{
+             setPic();
+           },1000)
+               
+            
+            
+        }
+
+        function Reset() {
+            Cut();
+        }
+
         //Hàm cắt ảnh
         function getOffset(el) {
             var _x = 0;
@@ -422,7 +492,7 @@ var i,j,k,n,t,r,b,l,x,y,timer;
                     setRow();
                 }*/
                 document.getElementById('main').style.height = window.innerHeight +'px';
-                if (window.innerHeight<window.innerWidth/1.2) {
+                if (window.innerHeight<window.innerWidth/1.3) {
                     setRowMb();
                 } else {
                     setColumnMb();
@@ -431,7 +501,7 @@ var i,j,k,n,t,r,b,l,x,y,timer;
                 /*document.body.style.height = '100vh';
                 document.body.style.overflow = 'auto';*/
                 document.getElementById('main').style.height = '100vh';
-                if (window.innerHeight<window.innerWidth/1.2) {
+                if (window.innerHeight<window.innerWidth/1.3) {
                     setRow();
                 } else {
                     setColumn();
@@ -458,39 +528,73 @@ var i,j,k,n,t,r,b,l,x,y,timer;
                             <span id="hour" class="text-danger">00</span>:<span id="minute" class="text-warning">00</span>:<span id="second" class="text-success">00</span>
                         </div>
                         <div class="d-flex justify-content-center align-items-center mb-1" id="topleft">
-                            <button class="btn-lg btn-danger"><a href="index.html" id='home' class="text-light">HOME</a></button>
-                            <button class="btn-lg btn-warning mx-sm-2 mx-1 text-light" onclick="Cut()">RESET</button>
+                            <button class="btn-lg btn-danger text-light" onclick="Home()">HOME</button>
+                            <button class="btn-lg btn-warning mx-sm-2 mx-1 text-light" onclick="Reset()">RESET</button>
                         </div>`;
             document.getElementById("hour").innerHTML="00";
             document.getElementById("minute").innerHTML="00";
             document.getElementById("second").innerHTML="00";
-            document.getElementById("cover").style.display="none";
+            document.getElementById("content").innerHTML='';
             document.getElementById("content").style.display="none";
             document.getElementById("xchoice").style.display="none";
             document.getElementById("layout").style.display="flex";
-                
+            creatStart();
         }
+
+
+        function random_color() {
+            let x = Math.floor(Math.random() * 256);
+            let y = Math.floor(Math.random() * 256);
+            let z = Math.floor(Math.random() * 256);
+            let rdColor = "rgb(" + x + "," + y + "," + z + ")";
+            return rdColor ;
+        }
+
+
+        function rdNumber(arr) {
+            for (let i = 1; i <= sizemain*sizemain;)
+            {
+                arr[i]=Math.ceil(Math.random()*sizemain*sizemain);
+                k=0;
+                for (j = 1; j < i; j++){
+                        if (arr[i] == arr[j]){
+                            k = k + 1;
+                        }
+                }
+                if (k == 0){
+                    i = i + 1;
+                }
+            }
+        }
+
+
         
         var addtb = document.getElementById('tablewrap');
         var sizeh,sizew; /*Kích thước khung cắt ảnh*/
-        var savenote = 0;
+        var noteColor=[];
+        var countColor=0;
+        var savenote = [];
+        
         function setSize() {
             n=0;
             k=0;
             nube=0;
             text="";
+            if(countColor===0) {
+                for(let i=0;i<sizemain*sizemain;i++) {
+                  noteColor[i]= random_color();
+                }
+                countColor=1;
+            }
+            
             for (i=1;i<=sizemain;i++){
                 text += "<tr>";
                 for (j=1;j<=sizemain;j++){
-                    nube += 1;
-                    if(savenote<8) {
-                      savenote+=1; 
-                    } else {
-                        savenote=1;
-                    }
+                    nube += 1; 
                     text += `<td id='tdtd${nube}'>
                         <img src='' alt='' id='td${nube}'>
-                        <span onmousedown='set(event,this,${nube})' ontouchstart='set(event,this,${nube})'>${note[savenote]}</span>
+                        <span style='color:${noteColor[nube-1]}' onmousedown='set(event,this,${nube})' 
+                        ontouchstart='set(event,this,${nube})'>${note[savenote[nube]]}</span>
                     </td>`;
                 }
                 text += "</tr>";
@@ -608,6 +712,8 @@ var i,j,k,n,t,r,b,l,x,y,timer;
             for (i=1;i<=sizemain*sizemain;i++){
                 document.getElementById("td"+i).style.height=sizeh+"px";
                 document.getElementById("td"+i).style.width=sizew+"px";
+                document.getElementById("tdtd"+i).style.width=sizew/sizemain +"px";
+                document.getElementById("tdtd"+i).style.height=sizeh/sizemain +"px";
             }
 
             /*Vị trí top của khung chứa ảnh căt-dùng cho random*/
@@ -648,6 +754,7 @@ var i,j,k,n,t,r,b,l,x,y,timer;
             }
         }
         function cutResize(){
+           
             /*Vị trí của khung ảnh khi thực hiện cắt*/ 
             for (i = 1; i <= sizemain*sizemain; i++){
                 topimgclip[i] = topimg[tdnumber[i]] - topclip[imgnumber[i]];
@@ -697,10 +804,9 @@ var i,j,k,n,t,r,b,l,x,y,timer;
                     }
                 }
             }
+            
         }
-        var result=[0];
-        var imgmark=[0];
-        var tdmark=[0];
+       
         function pow(x) {
             let gt=0;
             if(x===1) {
@@ -724,83 +830,77 @@ var i,j,k,n,t,r,b,l,x,y,timer;
             }
             if(x===1){return true};
         }
-        function add(value,index,arr) {
-            if (value===index) {
-                for (let i=1;i<=index;i++) {
-                    arr[value]=i;
+        function add(valuebegin,valueend,arr) {
+            if (valuebegin===valueend) {
+                for (let i=1;i<=valueend;i++) {
+                    arr[valuebegin]=i;
                     if(test(arr)) {
                         console.log(arr);
                     }
                 }  
             } else {
-                for(let j=1;j<=index;j++) {
-                    arr[value]=j;
-                    add(value+1,index,arr);
+                for(let j=1;j<=valueend;j++) {
+                    arr[valuebegin]=j;
+                    add(valuebegin+1,valueend,arr);
                 }
             }
         }
         
 
+
+        var arrResult;
         function Cut() {
+            clearInterval(zzz);
+            let y=document.getElementById(`cheerup`);
+            y.setAttribute('src','audio/cheerup.mp3');
+            y.play();
+            let resultnumber=[0];
+            let result=[0];
+            let imgmark=[0];
+            let tdmark=[0];
+            let countResult=0;
             setLayout();
             setDisplay();
             setSize();
-            let y=document.getElementById(`cheerup`);
-            y.play();
-            
+            arrResult=[];
             /*Random vị trí khung chứa ảnh cắt*/ 
-            for (let i = 1; i <= sizemain*sizemain;)
-            {
-                tdnumber[i]=Math.ceil(Math.random()*sizemain*sizemain);
-                k=0;
-                for (j = 1; j < i; j++){
-                        if (tdnumber[i] == tdnumber[j]){
-                            k = k + 1;
-                        }
-                }
-                if (k == 0){
-                    i = i + 1;
-                }
-            }
+            rdNumber(tdnumber);
             tdmark=[...tdnumber];
             console.log(tdnumber);
             /*Random vị trí ảnh nằm trong khung chứa*/ 
-            for (let i = 1; i <= sizemain*sizemain;)
-            {
-                imgnumber[i]=Math.ceil(Math.random()*sizemain*sizemain);
-                k=0;
-                for (j = 1; j < i; j++){
-                        if (imgnumber[i] == imgnumber[j]){
-                            k = k + 1;
-                        }
-                }
-                if (k == 0){
-                    i = i + 1;
-                }
-            }
+            rdNumber(imgnumber);
             imgmark=[...imgnumber];
             console.log(imgnumber);
+            /*Random resultnumber*/ 
+            rdNumber(resultnumber);
+            console.log(resultnumber);
             let mark=0;
             for (let i = 1; i <= sizemain*sizemain;) {
-                if (tdmark[i]!==imgmark[i]) {
+                if (tdmark[resultnumber[i]]!==imgmark[resultnumber[i]]) {
                     for(let j=1;j<= sizemain*sizemain;j++) {
-                        if(tdmark[j]===imgmark[i]) {
-                            mark=j;
+                        if(tdmark[resultnumber[j]]===imgmark[resultnumber[i]]) {
+                            mark=resultnumber[j];
+                            console.log(resultnumber[i]);
                             console.log(mark);
+                            arrResult[countResult]=resultnumber[i];
+                            arrResult[countResult+1]=mark;
+                            countResult+=2;
                         }
                     }
                     result[mark]=imgmark[mark];
-                    result[i]=imgmark[i];
-                    imgmark[mark]=result[i];
-                    imgmark[i]=result[mark];
+                    result[resultnumber[i]]=imgmark[resultnumber[i]];
+                    imgmark[mark]=result[resultnumber[i]];
+                    imgmark[resultnumber[i]]=result[mark];
                     console.log(tdmark);
                     console.log(imgmark);
+                    rdNumber(resultnumber);
+                    console.log(resultnumber);
                 } else {
                     i++;
                 }
             }
             console.log(imgmark);
-            
+            console.log(arrResult);
             cutResize();
             /*Set animationDuration cho khung kết quả + tạo 2 mảng thể hiện sự nhập xuất của ảnh ở 
             phần ảnh random và ảnh kết quả + khai báo biến chứa ảnh đã bị ẩn ở phần kết quả khi thực
@@ -811,6 +911,7 @@ var i,j,k,n,t,r,b,l,x,y,timer;
                 x.style.animationDuration=k+"s";
                 k=k+0.1;
             }
+           
         }
         
         //Hàm bắt đầu chơi
@@ -865,22 +966,18 @@ var i,j,k,n,t,r,b,l,x,y,timer;
         var savefirst=0;
         var savesecond=0;
         function set(e,elmn,clr){
+            e.preventDefault();
+            clearInterval(zzz);
             let y=document.getElementById(`cheerup`);
             y.setAttribute('src',`audio/${elmn.innerHTML}.mp3`);
             y.play();
-            e.preventDefault();
-            clearInterval(zzz);
             var timercount=0;
-            if (timer===0) {
-                start();
-                timer=1;
-            }
             if (nbtd===0) {
                 nbtd = clr;/*Biến chứa vị trí ảnh xuất hiện ở phần kết quả*/
-                document.getElementById('tdtd'+clr).style.opacity = "0.4";
+                document.getElementById('td'+clr).style.opacity = "0.4";
             } else if(nbtd===clr) {
                 nbtd = 0;
-                document.getElementById('tdtd'+clr).style.opacity = "1";
+                document.getElementById('td'+clr).style.opacity = "1";
             } else {
                 for (i = 1; i <= sizemain*sizemain; i++){
                     if (tdnumber[i]===nbtd) {
@@ -903,7 +1000,7 @@ var i,j,k,n,t,r,b,l,x,y,timer;
                         b = clipbottom[imgnumber[i]];
                         l = clipleft[imgnumber[i]];
                         x.style.clip= "rect("+ t + "px,"+ r + "px,"+ b + "px,"+ l + "px)";
-                        document.getElementById('tdtd'+nbtd).style.opacity = "1";
+                        x.style.opacity = "1";
                         savesecond=i;
                     }
                 }
@@ -919,9 +1016,25 @@ var i,j,k,n,t,r,b,l,x,y,timer;
                 }
             }
             if (timercount == (sizemain*sizemain)) {
-                document.getElementById("xchoice1").innerHTML="CONGRATULATION!";
                 document.getElementById("cover").style.display="block";
+                for(let i=0;i<document.querySelectorAll('td span').length;i++) {
+                    document.querySelectorAll('td span')[i].style.opacity = 0;
+                }
                 creatNext();
                 clearInterval(visible);
             }
+        }
+
+
+
+        window.onresize=function(){
+            if (layout===1) {
+                setDisplay();
+                setSize();
+                cutResize();
+            } else {
+                if (reSizenb===0) {
+                   setPic(); 
+                } 
+            } 
         }

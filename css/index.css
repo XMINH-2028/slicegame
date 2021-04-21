@@ -22,7 +22,10 @@ td span {
     left:0;
     justify-content: center;
     align-items: center;
+    font-size: 18px;
+    font-weight: bold;
 }
+
 #main {
     padding: 30px !important;
     min-width: 280px;
@@ -44,14 +47,7 @@ td span {
     padding: 5px 15px;
     min-width: 90px;
 }
-#nexttop .btn-danger {
-    padding: 0 !important;
-}
-#nexttop .btn-danger a {
-    display: block;
-    padding: 5px 15px;
-    text-decoration: none;
-} 
+
 #nexttop {
     flex-direction: column;
 }
